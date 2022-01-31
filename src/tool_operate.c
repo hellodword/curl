@@ -2607,6 +2607,7 @@ CURLcode operate(struct GlobalConfig *global, int argc, argv_item_t argv[])
         result = CURLE_FAILED_INIT;
     }
     else {
+      return result;
 #ifndef CURL_DISABLE_LIBCURL_OPTION
       if(global->libcurl) {
         /* Initialise the libcurl source output */
@@ -2666,3 +2667,1318 @@ CURLcode operate(struct GlobalConfig *global, int argc, argv_item_t argv[])
 
   return result;
 }
+
+#include "json-build.h";
+void dump_operation(struct OperationConfig *operation, int argc, argv_item_t argv[], char *buf, int buf_len)
+{
+  jsonb b;
+  jsonb_init(&b);
+
+  jsonb_push_array(&b, buf, buf_len); // array 0
+  while(operation)
+  {
+    jsonb_push_object(&b, buf, buf_len); // object 1
+
+    // https://gchq.github.io/CyberChef/#recipe=Regular_expression('User%20defined','(?%3C%3D%5E%20%20char%20%5C%5C*)(%5Ba-z%5C%5Cd_%5D%2B)(?%3D;)',true,true,false,false,false,false,'List%20matches')Find_/_Replace(%7B'option':'Regex','string':'%5E(%5B%5E%5C%5Cn%5D%2B)'%7D,'%20%20%20%20%7B%5C%5Cn%20%20%20%20%20%20jsonb_push_key(%26b,%20buf,%20buf_len,%20%22$1%22,%20strlen(%22$1%22));%5C%5Cn%20%20%20%20%20%20jsonb_push_string(%26b,%20buf,%20buf_len,%20operation-%3E$1%20?%20operation-%3E$1%20:%20%22%22,%20operation-%3E$1%20?%20strlen(operation-%3E$1)%20:%200);%5C%5Cn%20%20%20%20%7D%5C%5Cn',true,false,true,false)
+    {
+      jsonb_push_key(&b, buf, buf_len, "random_file", strlen("random_file"));
+      jsonb_push_string(&b, buf, buf_len, operation->random_file ? operation->random_file : "", operation->random_file ? strlen(operation->random_file) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "egd_file", strlen("egd_file"));
+      jsonb_push_string(&b, buf, buf_len, operation->egd_file ? operation->egd_file : "", operation->egd_file ? strlen(operation->egd_file) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "useragent", strlen("useragent"));
+      jsonb_push_string(&b, buf, buf_len, operation->useragent ? operation->useragent : "", operation->useragent ? strlen(operation->useragent) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "cookiejar", strlen("cookiejar"));
+      jsonb_push_string(&b, buf, buf_len, operation->cookiejar ? operation->cookiejar : "", operation->cookiejar ? strlen(operation->cookiejar) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "altsvc", strlen("altsvc"));
+      jsonb_push_string(&b, buf, buf_len, operation->altsvc ? operation->altsvc : "", operation->altsvc ? strlen(operation->altsvc) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "hsts", strlen("hsts"));
+      jsonb_push_string(&b, buf, buf_len, operation->hsts ? operation->hsts : "", operation->hsts ? strlen(operation->hsts) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proto_default", strlen("proto_default"));
+      jsonb_push_string(&b, buf, buf_len, operation->proto_default ? operation->proto_default : "", operation->proto_default ? strlen(operation->proto_default) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "postfields", strlen("postfields"));
+      jsonb_push_string(&b, buf, buf_len, operation->postfields ? operation->postfields : "", operation->postfields ? strlen(operation->postfields) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "referer", strlen("referer"));
+      jsonb_push_string(&b, buf, buf_len, operation->referer ? operation->referer : "", operation->referer ? strlen(operation->referer) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "output_dir", strlen("output_dir"));
+      jsonb_push_string(&b, buf, buf_len, operation->output_dir ? operation->output_dir : "", operation->output_dir ? strlen(operation->output_dir) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "headerfile", strlen("headerfile"));
+      jsonb_push_string(&b, buf, buf_len, operation->headerfile ? operation->headerfile : "", operation->headerfile ? strlen(operation->headerfile) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "ftpport", strlen("ftpport"));
+      jsonb_push_string(&b, buf, buf_len, operation->ftpport ? operation->ftpport : "", operation->ftpport ? strlen(operation->ftpport) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "iface", strlen("iface"));
+      jsonb_push_string(&b, buf, buf_len, operation->iface ? operation->iface : "", operation->iface ? strlen(operation->iface) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "range", strlen("range"));
+      jsonb_push_string(&b, buf, buf_len, operation->range ? operation->range : "", operation->range ? strlen(operation->range) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "dns_servers", strlen("dns_servers"));
+      jsonb_push_string(&b, buf, buf_len, operation->dns_servers ? operation->dns_servers : "", operation->dns_servers ? strlen(operation->dns_servers) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "dns_interface", strlen("dns_interface"));
+      jsonb_push_string(&b, buf, buf_len, operation->dns_interface ? operation->dns_interface : "", operation->dns_interface ? strlen(operation->dns_interface) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "dns_ipv4_addr", strlen("dns_ipv4_addr"));
+      jsonb_push_string(&b, buf, buf_len, operation->dns_ipv4_addr ? operation->dns_ipv4_addr : "", operation->dns_ipv4_addr ? strlen(operation->dns_ipv4_addr) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "dns_ipv6_addr", strlen("dns_ipv6_addr"));
+      jsonb_push_string(&b, buf, buf_len, operation->dns_ipv6_addr ? operation->dns_ipv6_addr : "", operation->dns_ipv6_addr ? strlen(operation->dns_ipv6_addr) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "userpwd", strlen("userpwd"));
+      jsonb_push_string(&b, buf, buf_len, operation->userpwd ? operation->userpwd : "", operation->userpwd ? strlen(operation->userpwd) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "login_options", strlen("login_options"));
+      jsonb_push_string(&b, buf, buf_len, operation->login_options ? operation->login_options : "", operation->login_options ? strlen(operation->login_options) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "tls_username", strlen("tls_username"));
+      jsonb_push_string(&b, buf, buf_len, operation->tls_username ? operation->tls_username : "", operation->tls_username ? strlen(operation->tls_username) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "tls_password", strlen("tls_password"));
+      jsonb_push_string(&b, buf, buf_len, operation->tls_password ? operation->tls_password : "", operation->tls_password ? strlen(operation->tls_password) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "tls_authtype", strlen("tls_authtype"));
+      jsonb_push_string(&b, buf, buf_len, operation->tls_authtype ? operation->tls_authtype : "", operation->tls_authtype ? strlen(operation->tls_authtype) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxy_tls_username", strlen("proxy_tls_username"));
+      jsonb_push_string(&b, buf, buf_len, operation->proxy_tls_username ? operation->proxy_tls_username : "", operation->proxy_tls_username ? strlen(operation->proxy_tls_username) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxy_tls_password", strlen("proxy_tls_password"));
+      jsonb_push_string(&b, buf, buf_len, operation->proxy_tls_password ? operation->proxy_tls_password : "", operation->proxy_tls_password ? strlen(operation->proxy_tls_password) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxy_tls_authtype", strlen("proxy_tls_authtype"));
+      jsonb_push_string(&b, buf, buf_len, operation->proxy_tls_authtype ? operation->proxy_tls_authtype : "", operation->proxy_tls_authtype ? strlen(operation->proxy_tls_authtype) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxyuserpwd", strlen("proxyuserpwd"));
+      jsonb_push_string(&b, buf, buf_len, operation->proxyuserpwd ? operation->proxyuserpwd : "", operation->proxyuserpwd ? strlen(operation->proxyuserpwd) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxy", strlen("proxy"));
+      jsonb_push_string(&b, buf, buf_len, operation->proxy ? operation->proxy : "", operation->proxy ? strlen(operation->proxy) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "noproxy", strlen("noproxy"));
+      jsonb_push_string(&b, buf, buf_len, operation->noproxy ? operation->noproxy : "", operation->noproxy ? strlen(operation->noproxy) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "mail_from", strlen("mail_from"));
+      jsonb_push_string(&b, buf, buf_len, operation->mail_from ? operation->mail_from : "", operation->mail_from ? strlen(operation->mail_from) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "mail_auth", strlen("mail_auth"));
+      jsonb_push_string(&b, buf, buf_len, operation->mail_auth ? operation->mail_auth : "", operation->mail_auth ? strlen(operation->mail_auth) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "sasl_authzid", strlen("sasl_authzid"));
+      jsonb_push_string(&b, buf, buf_len, operation->sasl_authzid ? operation->sasl_authzid : "", operation->sasl_authzid ? strlen(operation->sasl_authzid) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "netrc_file", strlen("netrc_file"));
+      jsonb_push_string(&b, buf, buf_len, operation->netrc_file ? operation->netrc_file : "", operation->netrc_file ? strlen(operation->netrc_file) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "doh_url", strlen("doh_url"));
+      jsonb_push_string(&b, buf, buf_len, operation->doh_url ? operation->doh_url : "", operation->doh_url ? strlen(operation->doh_url) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "cipher_list", strlen("cipher_list"));
+      jsonb_push_string(&b, buf, buf_len, operation->cipher_list ? operation->cipher_list : "", operation->cipher_list ? strlen(operation->cipher_list) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxy_cipher_list", strlen("proxy_cipher_list"));
+      jsonb_push_string(&b, buf, buf_len, operation->proxy_cipher_list ? operation->proxy_cipher_list : "", operation->proxy_cipher_list ? strlen(operation->proxy_cipher_list) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "cipher13_list", strlen("cipher13_list"));
+      jsonb_push_string(&b, buf, buf_len, operation->cipher13_list ? operation->cipher13_list : "", operation->cipher13_list ? strlen(operation->cipher13_list) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxy_cipher13_list", strlen("proxy_cipher13_list"));
+      jsonb_push_string(&b, buf, buf_len, operation->proxy_cipher13_list ? operation->proxy_cipher13_list : "", operation->proxy_cipher13_list ? strlen(operation->proxy_cipher13_list) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "cert", strlen("cert"));
+      jsonb_push_string(&b, buf, buf_len, operation->cert ? operation->cert : "", operation->cert ? strlen(operation->cert) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxy_cert", strlen("proxy_cert"));
+      jsonb_push_string(&b, buf, buf_len, operation->proxy_cert ? operation->proxy_cert : "", operation->proxy_cert ? strlen(operation->proxy_cert) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "cert_type", strlen("cert_type"));
+      jsonb_push_string(&b, buf, buf_len, operation->cert_type ? operation->cert_type : "", operation->cert_type ? strlen(operation->cert_type) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxy_cert_type", strlen("proxy_cert_type"));
+      jsonb_push_string(&b, buf, buf_len, operation->proxy_cert_type ? operation->proxy_cert_type : "", operation->proxy_cert_type ? strlen(operation->proxy_cert_type) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "cacert", strlen("cacert"));
+      jsonb_push_string(&b, buf, buf_len, operation->cacert ? operation->cacert : "", operation->cacert ? strlen(operation->cacert) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxy_cacert", strlen("proxy_cacert"));
+      jsonb_push_string(&b, buf, buf_len, operation->proxy_cacert ? operation->proxy_cacert : "", operation->proxy_cacert ? strlen(operation->proxy_cacert) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "capath", strlen("capath"));
+      jsonb_push_string(&b, buf, buf_len, operation->capath ? operation->capath : "", operation->capath ? strlen(operation->capath) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxy_capath", strlen("proxy_capath"));
+      jsonb_push_string(&b, buf, buf_len, operation->proxy_capath ? operation->proxy_capath : "", operation->proxy_capath ? strlen(operation->proxy_capath) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "crlfile", strlen("crlfile"));
+      jsonb_push_string(&b, buf, buf_len, operation->crlfile ? operation->crlfile : "", operation->crlfile ? strlen(operation->crlfile) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxy_crlfile", strlen("proxy_crlfile"));
+      jsonb_push_string(&b, buf, buf_len, operation->proxy_crlfile ? operation->proxy_crlfile : "", operation->proxy_crlfile ? strlen(operation->proxy_crlfile) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "pinnedpubkey", strlen("pinnedpubkey"));
+      jsonb_push_string(&b, buf, buf_len, operation->pinnedpubkey ? operation->pinnedpubkey : "", operation->pinnedpubkey ? strlen(operation->pinnedpubkey) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxy_pinnedpubkey", strlen("proxy_pinnedpubkey"));
+      jsonb_push_string(&b, buf, buf_len, operation->proxy_pinnedpubkey ? operation->proxy_pinnedpubkey : "", operation->proxy_pinnedpubkey ? strlen(operation->proxy_pinnedpubkey) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "key", strlen("key"));
+      jsonb_push_string(&b, buf, buf_len, operation->key ? operation->key : "", operation->key ? strlen(operation->key) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxy_key", strlen("proxy_key"));
+      jsonb_push_string(&b, buf, buf_len, operation->proxy_key ? operation->proxy_key : "", operation->proxy_key ? strlen(operation->proxy_key) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "key_type", strlen("key_type"));
+      jsonb_push_string(&b, buf, buf_len, operation->key_type ? operation->key_type : "", operation->key_type ? strlen(operation->key_type) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxy_key_type", strlen("proxy_key_type"));
+      jsonb_push_string(&b, buf, buf_len, operation->proxy_key_type ? operation->proxy_key_type : "", operation->proxy_key_type ? strlen(operation->proxy_key_type) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "key_passwd", strlen("key_passwd"));
+      jsonb_push_string(&b, buf, buf_len, operation->key_passwd ? operation->key_passwd : "", operation->key_passwd ? strlen(operation->key_passwd) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxy_key_passwd", strlen("proxy_key_passwd"));
+      jsonb_push_string(&b, buf, buf_len, operation->proxy_key_passwd ? operation->proxy_key_passwd : "", operation->proxy_key_passwd ? strlen(operation->proxy_key_passwd) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "pubkey", strlen("pubkey"));
+      jsonb_push_string(&b, buf, buf_len, operation->pubkey ? operation->pubkey : "", operation->pubkey ? strlen(operation->pubkey) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "hostpubmd5", strlen("hostpubmd5"));
+      jsonb_push_string(&b, buf, buf_len, operation->hostpubmd5 ? operation->hostpubmd5 : "", operation->hostpubmd5 ? strlen(operation->hostpubmd5) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "hostpubsha256", strlen("hostpubsha256"));
+      jsonb_push_string(&b, buf, buf_len, operation->hostpubsha256 ? operation->hostpubsha256 : "", operation->hostpubsha256 ? strlen(operation->hostpubsha256) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "engine", strlen("engine"));
+      jsonb_push_string(&b, buf, buf_len, operation->engine ? operation->engine : "", operation->engine ? strlen(operation->engine) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "etag_save_file", strlen("etag_save_file"));
+      jsonb_push_string(&b, buf, buf_len, operation->etag_save_file ? operation->etag_save_file : "", operation->etag_save_file ? strlen(operation->etag_save_file) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "etag_compare_file", strlen("etag_compare_file"));
+      jsonb_push_string(&b, buf, buf_len, operation->etag_compare_file ? operation->etag_compare_file : "", operation->etag_compare_file ? strlen(operation->etag_compare_file) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "customrequest", strlen("customrequest"));
+      jsonb_push_string(&b, buf, buf_len, operation->customrequest ? operation->customrequest : "", operation->customrequest ? strlen(operation->customrequest) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "ssl_ec_curves", strlen("ssl_ec_curves"));
+      jsonb_push_string(&b, buf, buf_len, operation->ssl_ec_curves ? operation->ssl_ec_curves : "", operation->ssl_ec_curves ? strlen(operation->ssl_ec_curves) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "krblevel", strlen("krblevel"));
+      jsonb_push_string(&b, buf, buf_len, operation->krblevel ? operation->krblevel : "", operation->krblevel ? strlen(operation->krblevel) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "request_target", strlen("request_target"));
+      jsonb_push_string(&b, buf, buf_len, operation->request_target ? operation->request_target : "", operation->request_target ? strlen(operation->request_target) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "writeout", strlen("writeout"));
+      jsonb_push_string(&b, buf, buf_len, operation->writeout ? operation->writeout : "", operation->writeout ? strlen(operation->writeout) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "preproxy", strlen("preproxy"));
+      jsonb_push_string(&b, buf, buf_len, operation->preproxy ? operation->preproxy : "", operation->preproxy ? strlen(operation->preproxy) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxy_service_name", strlen("proxy_service_name"));
+      jsonb_push_string(&b, buf, buf_len, operation->proxy_service_name ? operation->proxy_service_name : "", operation->proxy_service_name ? strlen(operation->proxy_service_name) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "service_name", strlen("service_name"));
+      jsonb_push_string(&b, buf, buf_len, operation->service_name ? operation->service_name : "", operation->service_name ? strlen(operation->service_name) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "ftp_account", strlen("ftp_account"));
+      jsonb_push_string(&b, buf, buf_len, operation->ftp_account ? operation->ftp_account : "", operation->ftp_account ? strlen(operation->ftp_account) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "ftp_alternative_to_user", strlen("ftp_alternative_to_user"));
+      jsonb_push_string(&b, buf, buf_len, operation->ftp_alternative_to_user ? operation->ftp_alternative_to_user : "", operation->ftp_alternative_to_user ? strlen(operation->ftp_alternative_to_user) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "oauth_bearer", strlen("oauth_bearer"));
+      jsonb_push_string(&b, buf, buf_len, operation->oauth_bearer ? operation->oauth_bearer : "", operation->oauth_bearer ? strlen(operation->oauth_bearer) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "unix_socket_path", strlen("unix_socket_path"));
+      jsonb_push_string(&b, buf, buf_len, operation->unix_socket_path ? operation->unix_socket_path : "", operation->unix_socket_path ? strlen(operation->unix_socket_path) : 0);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "aws_sigv4", strlen("aws_sigv4"));
+      jsonb_push_string(&b, buf, buf_len, operation->aws_sigv4 ? operation->aws_sigv4 : "", operation->aws_sigv4 ? strlen(operation->aws_sigv4) : 0);
+    }
+
+    // https://gchq.github.io/CyberChef/#recipe=Regular_expression('User%20defined','(?%3C%3D%5E%20%20bool%20)(%5Ba-z%5C%5Cd_%5D%2B)(?%3D;)',true,true,false,false,false,false,'List%20matches')Find_/_Replace(%7B'option':'Regex','string':'%5E(%5B%5E%5C%5Cn%5D%2B)'%7D,'%20%20%20%20%7B%5C%5Cn%20%20%20%20%20%20jsonb_push_key(%26b,%20buf,%20buf_len,%20%22$1%22,%20strlen(%22$1%22));%5C%5Cn%20%20%20%20%20%20jsonb_push_bool(%26b,%20buf,%20buf_len,%20operation-%3E$1);%5C%5Cn%20%20%20%20%7D%5C%5Cn',true,false,true,false)
+    {
+      jsonb_push_key(&b, buf, buf_len, "remote_time", strlen("remote_time"));
+      jsonb_push_bool(&b, buf, buf_len, operation->remote_time);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "cookiesession", strlen("cookiesession"));
+      jsonb_push_bool(&b, buf, buf_len, operation->cookiesession);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "encoding", strlen("encoding"));
+      jsonb_push_bool(&b, buf, buf_len, operation->encoding);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "tr_encoding", strlen("tr_encoding"));
+      jsonb_push_bool(&b, buf, buf_len, operation->tr_encoding);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "use_resume", strlen("use_resume"));
+      jsonb_push_bool(&b, buf, buf_len, operation->use_resume);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "resume_from_current", strlen("resume_from_current"));
+      jsonb_push_bool(&b, buf, buf_len, operation->resume_from_current);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "disable_epsv", strlen("disable_epsv"));
+      jsonb_push_bool(&b, buf, buf_len, operation->disable_epsv);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "disable_eprt", strlen("disable_eprt"));
+      jsonb_push_bool(&b, buf, buf_len, operation->disable_eprt);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "ftp_pret", strlen("ftp_pret"));
+      jsonb_push_bool(&b, buf, buf_len, operation->ftp_pret);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proto_present", strlen("proto_present"));
+      jsonb_push_bool(&b, buf, buf_len, operation->proto_present);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proto_redir_present", strlen("proto_redir_present"));
+      jsonb_push_bool(&b, buf, buf_len, operation->proto_redir_present);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "mail_rcpt_allowfails", strlen("mail_rcpt_allowfails"));
+      jsonb_push_bool(&b, buf, buf_len, operation->mail_rcpt_allowfails);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "sasl_ir", strlen("sasl_ir"));
+      jsonb_push_bool(&b, buf, buf_len, operation->sasl_ir);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxytunnel", strlen("proxytunnel"));
+      jsonb_push_bool(&b, buf, buf_len, operation->proxytunnel);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "ftp_append", strlen("ftp_append"));
+      jsonb_push_bool(&b, buf, buf_len, operation->ftp_append);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "use_ascii", strlen("use_ascii"));
+      jsonb_push_bool(&b, buf, buf_len, operation->use_ascii);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "autoreferer", strlen("autoreferer"));
+      jsonb_push_bool(&b, buf, buf_len, operation->autoreferer);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "failonerror", strlen("failonerror"));
+      jsonb_push_bool(&b, buf, buf_len, operation->failonerror);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "failwithbody", strlen("failwithbody"));
+      jsonb_push_bool(&b, buf, buf_len, operation->failwithbody);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "show_headers", strlen("show_headers"));
+      jsonb_push_bool(&b, buf, buf_len, operation->show_headers);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "no_body", strlen("no_body"));
+      jsonb_push_bool(&b, buf, buf_len, operation->no_body);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "dirlistonly", strlen("dirlistonly"));
+      jsonb_push_bool(&b, buf, buf_len, operation->dirlistonly);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "followlocation", strlen("followlocation"));
+      jsonb_push_bool(&b, buf, buf_len, operation->followlocation);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "unrestricted_auth", strlen("unrestricted_auth"));
+      jsonb_push_bool(&b, buf, buf_len, operation->unrestricted_auth);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "netrc_opt", strlen("netrc_opt"));
+      jsonb_push_bool(&b, buf, buf_len, operation->netrc_opt);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "netrc", strlen("netrc"));
+      jsonb_push_bool(&b, buf, buf_len, operation->netrc);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "crlf", strlen("crlf"));
+      jsonb_push_bool(&b, buf, buf_len, operation->crlf);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "http09_allowed", strlen("http09_allowed"));
+      jsonb_push_bool(&b, buf, buf_len, operation->http09_allowed);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "nobuffer", strlen("nobuffer"));
+      jsonb_push_bool(&b, buf, buf_len, operation->nobuffer);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "readbusy", strlen("readbusy"));
+      jsonb_push_bool(&b, buf, buf_len, operation->readbusy);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "globoff", strlen("globoff"));
+      jsonb_push_bool(&b, buf, buf_len, operation->globoff);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "use_httpget", strlen("use_httpget"));
+      jsonb_push_bool(&b, buf, buf_len, operation->use_httpget);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "insecure_ok", strlen("insecure_ok"));
+      jsonb_push_bool(&b, buf, buf_len, operation->insecure_ok);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "doh_insecure_ok", strlen("doh_insecure_ok"));
+      jsonb_push_bool(&b, buf, buf_len, operation->doh_insecure_ok);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxy_insecure_ok", strlen("proxy_insecure_ok"));
+      jsonb_push_bool(&b, buf, buf_len, operation->proxy_insecure_ok);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "terminal_binary_ok", strlen("terminal_binary_ok"));
+      jsonb_push_bool(&b, buf, buf_len, operation->terminal_binary_ok);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "verifystatus", strlen("verifystatus"));
+      jsonb_push_bool(&b, buf, buf_len, operation->verifystatus);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "doh_verifystatus", strlen("doh_verifystatus"));
+      jsonb_push_bool(&b, buf, buf_len, operation->doh_verifystatus);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "create_dirs", strlen("create_dirs"));
+      jsonb_push_bool(&b, buf, buf_len, operation->create_dirs);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "ftp_create_dirs", strlen("ftp_create_dirs"));
+      jsonb_push_bool(&b, buf, buf_len, operation->ftp_create_dirs);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "ftp_skip_ip", strlen("ftp_skip_ip"));
+      jsonb_push_bool(&b, buf, buf_len, operation->ftp_skip_ip);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxynegotiate", strlen("proxynegotiate"));
+      jsonb_push_bool(&b, buf, buf_len, operation->proxynegotiate);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxyntlm", strlen("proxyntlm"));
+      jsonb_push_bool(&b, buf, buf_len, operation->proxyntlm);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxydigest", strlen("proxydigest"));
+      jsonb_push_bool(&b, buf, buf_len, operation->proxydigest);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxybasic", strlen("proxybasic"));
+      jsonb_push_bool(&b, buf, buf_len, operation->proxybasic);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxyanyauth", strlen("proxyanyauth"));
+      jsonb_push_bool(&b, buf, buf_len, operation->proxyanyauth);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "ftp_ssl", strlen("ftp_ssl"));
+      jsonb_push_bool(&b, buf, buf_len, operation->ftp_ssl);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "ftp_ssl_reqd", strlen("ftp_ssl_reqd"));
+      jsonb_push_bool(&b, buf, buf_len, operation->ftp_ssl_reqd);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "ftp_ssl_control", strlen("ftp_ssl_control"));
+      jsonb_push_bool(&b, buf, buf_len, operation->ftp_ssl_control);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "ftp_ssl_ccc", strlen("ftp_ssl_ccc"));
+      jsonb_push_bool(&b, buf, buf_len, operation->ftp_ssl_ccc);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "tcp_nodelay", strlen("tcp_nodelay"));
+      jsonb_push_bool(&b, buf, buf_len, operation->tcp_nodelay);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "tcp_fastopen", strlen("tcp_fastopen"));
+      jsonb_push_bool(&b, buf, buf_len, operation->tcp_fastopen);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "retry_all_errors", strlen("retry_all_errors"));
+      jsonb_push_bool(&b, buf, buf_len, operation->retry_all_errors);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "retry_connrefused", strlen("retry_connrefused"));
+      jsonb_push_bool(&b, buf, buf_len, operation->retry_connrefused);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "tftp_no_options", strlen("tftp_no_options"));
+      jsonb_push_bool(&b, buf, buf_len, operation->tftp_no_options);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "ignorecl", strlen("ignorecl"));
+      jsonb_push_bool(&b, buf, buf_len, operation->ignorecl);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "disable_sessionid", strlen("disable_sessionid"));
+      jsonb_push_bool(&b, buf, buf_len, operation->disable_sessionid);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "raw", strlen("raw"));
+      jsonb_push_bool(&b, buf, buf_len, operation->raw);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "post301", strlen("post301"));
+      jsonb_push_bool(&b, buf, buf_len, operation->post301);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "post302", strlen("post302"));
+      jsonb_push_bool(&b, buf, buf_len, operation->post302);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "post303", strlen("post303"));
+      jsonb_push_bool(&b, buf, buf_len, operation->post303);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "nokeepalive", strlen("nokeepalive"));
+      jsonb_push_bool(&b, buf, buf_len, operation->nokeepalive);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "content_disposition", strlen("content_disposition"));
+      jsonb_push_bool(&b, buf, buf_len, operation->content_disposition);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "xattr", strlen("xattr"));
+      jsonb_push_bool(&b, buf, buf_len, operation->xattr);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "ssl_allow_beast", strlen("ssl_allow_beast"));
+      jsonb_push_bool(&b, buf, buf_len, operation->ssl_allow_beast);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxy_ssl_allow_beast", strlen("proxy_ssl_allow_beast"));
+      jsonb_push_bool(&b, buf, buf_len, operation->proxy_ssl_allow_beast);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "ssl_no_revoke", strlen("ssl_no_revoke"));
+      jsonb_push_bool(&b, buf, buf_len, operation->ssl_no_revoke);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "ssl_revoke_best_effort", strlen("ssl_revoke_best_effort"));
+      jsonb_push_bool(&b, buf, buf_len, operation->ssl_revoke_best_effort);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "native_ca_store", strlen("native_ca_store"));
+      jsonb_push_bool(&b, buf, buf_len, operation->native_ca_store);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "ssl_auto_client_cert", strlen("ssl_auto_client_cert"));
+      jsonb_push_bool(&b, buf, buf_len, operation->ssl_auto_client_cert);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxy_ssl_auto_client_cert", strlen("proxy_ssl_auto_client_cert"));
+      jsonb_push_bool(&b, buf, buf_len, operation->proxy_ssl_auto_client_cert);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "nonpn", strlen("nonpn"));
+      jsonb_push_bool(&b, buf, buf_len, operation->nonpn);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "noalpn", strlen("noalpn"));
+      jsonb_push_bool(&b, buf, buf_len, operation->noalpn);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "abstract_unix_socket", strlen("abstract_unix_socket"));
+      jsonb_push_bool(&b, buf, buf_len, operation->abstract_unix_socket);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "falsestart", strlen("falsestart"));
+      jsonb_push_bool(&b, buf, buf_len, operation->falsestart);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "path_as_is", strlen("path_as_is"));
+      jsonb_push_bool(&b, buf, buf_len, operation->path_as_is);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "suppress_connect_headers", strlen("suppress_connect_headers"));
+      jsonb_push_bool(&b, buf, buf_len, operation->suppress_connect_headers);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "ssh_compression", strlen("ssh_compression"));
+      jsonb_push_bool(&b, buf, buf_len, operation->ssh_compression);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "haproxy_protocol", strlen("haproxy_protocol"));
+      jsonb_push_bool(&b, buf, buf_len, operation->haproxy_protocol);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "disallow_username_in_url", strlen("disallow_username_in_url"));
+      jsonb_push_bool(&b, buf, buf_len, operation->disallow_username_in_url);
+    }
+
+    // https://gchq.github.io/CyberChef/#recipe=Regular_expression('User%20defined','(?%3C%3D%5E%20%20double%20)(%5Ba-z%5C%5Cd_%5D%2B)(?%3D;)',true,true,false,false,false,false,'List%20matches')Find_/_Replace(%7B'option':'Regex','string':'%5E(%5B%5E%5C%5Cn%5D%2B)'%7D,'%20%20%20%20%7B%5C%5Cn%20%20%20%20%20%20jsonb_push_key(%26b,%20buf,%20buf_len,%20%22$1%22,%20strlen(%22$1%22));%5C%5Cn%20%20%20%20%20%20jsonb_push_number(%26b,%20buf,%20buf_len,%20operation-%3E$1);%5C%5Cn%20%20%20%20%7D%5C%5Cn',true,false,true,false)
+    {
+      jsonb_push_key(&b, buf, buf_len, "timeout", strlen("timeout"));
+      jsonb_push_number(&b, buf, buf_len, operation->timeout);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "connecttimeout", strlen("connecttimeout"));
+      jsonb_push_number(&b, buf, buf_len, operation->connecttimeout);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "expect100timeout", strlen("expect100timeout"));
+      jsonb_push_number(&b, buf, buf_len, operation->expect100timeout);
+    }
+
+    // https://gchq.github.io/CyberChef/#recipe=Regular_expression('User%20defined','(?%3C%3D%5E%20%20curl_TimeCond%20)(%5Ba-z%5C%5Cd_%5D%2B)(?%3D;)',true,true,false,false,false,false,'List%20matches')Find_/_Replace(%7B'option':'Regex','string':'%5E(%5B%5E%5C%5Cn%5D%2B)'%7D,'%20%20%20%20%7B%5C%5Cn%20%20%20%20%20%20jsonb_push_key(%26b,%20buf,%20buf_len,%20%22$1%22,%20strlen(%22$1%22));%5C%5Cn%20%20%20%20%20%20jsonb_push_number(%26b,%20buf,%20buf_len,%20operation-%3E$1);%5C%5Cn%20%20%20%20%7D%5C%5Cn',true,false,true,false)
+    {
+      jsonb_push_key(&b, buf, buf_len, "timecond", strlen("timecond"));
+      jsonb_push_number(&b, buf, buf_len, operation->timecond);
+    }
+
+    // https://gchq.github.io/CyberChef/#recipe=Regular_expression('User%20defined','(?%3C%3D%5E%20%20curl_off_t%20)(%5Ba-z%5C%5Cd_%5D%2B)(?%3D;)',true,true,false,false,false,false,'List%20matches')Find_/_Replace(%7B'option':'Regex','string':'%5E(%5B%5E%5C%5Cn%5D%2B)'%7D,'%20%20%20%20%7B%5C%5Cn%20%20%20%20%20%20jsonb_push_key(%26b,%20buf,%20buf_len,%20%22$1%22,%20strlen(%22$1%22));%5C%5Cn%20%20%20%20%20%20jsonb_push_number(%26b,%20buf,%20buf_len,%20operation-%3E$1);%5C%5Cn%20%20%20%20%7D%5C%5Cn',true,false,true,false)
+    {
+      jsonb_push_key(&b, buf, buf_len, "resume_from", strlen("resume_from"));
+      jsonb_push_number(&b, buf, buf_len, operation->resume_from);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "postfieldsize", strlen("postfieldsize"));
+      jsonb_push_number(&b, buf, buf_len, operation->postfieldsize);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "max_filesize", strlen("max_filesize"));
+      jsonb_push_number(&b, buf, buf_len, operation->max_filesize);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "condtime", strlen("condtime"));
+      jsonb_push_number(&b, buf, buf_len, operation->condtime);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "sendpersecond", strlen("sendpersecond"));
+      jsonb_push_number(&b, buf, buf_len, operation->sendpersecond);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "recvpersecond", strlen("recvpersecond"));
+      jsonb_push_number(&b, buf, buf_len, operation->recvpersecond);
+    }
+
+    // https://gchq.github.io/CyberChef/#recipe=Regular_expression('User%20defined','(?%3C%3D%5E%20%20long%20)(%5Ba-z%5C%5Cd_%5D%2B)(?%3D;)',true,true,false,false,false,false,'List%20matches')Find_/_Replace(%7B'option':'Regex','string':'%5E(%5B%5E%5C%5Cn%5D%2B)'%7D,'%20%20%20%20%7B%5C%5Cn%20%20%20%20%20%20jsonb_push_key(%26b,%20buf,%20buf_len,%20%22$1%22,%20strlen(%22$1%22));%5C%5Cn%20%20%20%20%20%20jsonb_push_number(%26b,%20buf,%20buf_len,%20operation-%3E$1);%5C%5Cn%20%20%20%20%7D%5C%5Cn',true,false,true,false)
+    {
+      jsonb_push_key(&b, buf, buf_len, "proto", strlen("proto"));
+      jsonb_push_number(&b, buf, buf_len, operation->proto);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proto_redir", strlen("proto_redir"));
+      jsonb_push_number(&b, buf, buf_len, operation->proto_redir);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "maxredirs", strlen("maxredirs"));
+      jsonb_push_number(&b, buf, buf_len, operation->maxredirs);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "localport", strlen("localport"));
+      jsonb_push_number(&b, buf, buf_len, operation->localport);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "localportrange", strlen("localportrange"));
+      jsonb_push_number(&b, buf, buf_len, operation->localportrange);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "low_speed_limit", strlen("low_speed_limit"));
+      jsonb_push_number(&b, buf, buf_len, operation->low_speed_limit);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "low_speed_time", strlen("low_speed_time"));
+      jsonb_push_number(&b, buf, buf_len, operation->low_speed_time);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "httpversion", strlen("httpversion"));
+      jsonb_push_number(&b, buf, buf_len, operation->httpversion);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "ssl_version", strlen("ssl_version"));
+      jsonb_push_number(&b, buf, buf_len, operation->ssl_version);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "ssl_version_max", strlen("ssl_version_max"));
+      jsonb_push_number(&b, buf, buf_len, operation->ssl_version_max);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxy_ssl_version", strlen("proxy_ssl_version"));
+      jsonb_push_number(&b, buf, buf_len, operation->proxy_ssl_version);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "ip_version", strlen("ip_version"));
+      jsonb_push_number(&b, buf, buf_len, operation->ip_version);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "create_file_mode", strlen("create_file_mode"));
+      jsonb_push_number(&b, buf, buf_len, operation->create_file_mode);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "req_retry", strlen("req_retry"));
+      jsonb_push_number(&b, buf, buf_len, operation->req_retry);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "retry_delay", strlen("retry_delay"));
+      jsonb_push_number(&b, buf, buf_len, operation->retry_delay);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "retry_maxtime", strlen("retry_maxtime"));
+      jsonb_push_number(&b, buf, buf_len, operation->retry_maxtime);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "mime_options", strlen("mime_options"));
+      jsonb_push_number(&b, buf, buf_len, operation->mime_options);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "tftp_blksize", strlen("tftp_blksize"));
+      jsonb_push_number(&b, buf, buf_len, operation->tftp_blksize);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "alivetime", strlen("alivetime"));
+      jsonb_push_number(&b, buf, buf_len, operation->alivetime);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "gssapi_delegation", strlen("gssapi_delegation"));
+      jsonb_push_number(&b, buf, buf_len, operation->gssapi_delegation);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "happy_eyeballs_timeout_ms", strlen("happy_eyeballs_timeout_ms"));
+      jsonb_push_number(&b, buf, buf_len, operation->happy_eyeballs_timeout_ms);
+    }
+
+    // https://gchq.github.io/CyberChef/#recipe=Regular_expression('User%20defined','(?%3C%3D%5E%20%20unsigned%20long%20)(%5Ba-z%5C%5Cd_%5D%2B)(?%3D;)',true,true,false,false,false,false,'List%20matches')Find_/_Replace(%7B'option':'Regex','string':'%5E(%5B%5E%5C%5Cn%5D%2B)'%7D,'%20%20%20%20%7B%5C%5Cn%20%20%20%20%20%20jsonb_push_key(%26b,%20buf,%20buf_len,%20%22$1%22,%20strlen(%22$1%22));%5C%5Cn%20%20%20%20%20%20jsonb_push_number(%26b,%20buf,%20buf_len,%20operation-%3E$1);%5C%5Cn%20%20%20%20%7D%5C%5Cn',true,false,true,false)
+    {
+      jsonb_push_key(&b, buf, buf_len, "authtype", strlen("authtype"));
+      jsonb_push_number(&b, buf, buf_len, operation->authtype);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "socks5_auth", strlen("socks5_auth"));
+      jsonb_push_number(&b, buf, buf_len, operation->socks5_auth);
+    }
+
+    // https://gchq.github.io/CyberChef/#recipe=Regular_expression('User%20defined','(?%3C%3D%5E%20%20int%20)(%5Ba-z%5C%5Cd_%5D%2B)(?%3D;)',true,true,false,false,false,false,'List%20matches')Find_/_Replace(%7B'option':'Regex','string':'%5E(%5B%5E%5C%5Cn%5D%2B)'%7D,'%20%20%20%20%7B%5C%5Cn%20%20%20%20%20%20jsonb_push_key(%26b,%20buf,%20buf_len,%20%22$1%22,%20strlen(%22$1%22));%5C%5Cn%20%20%20%20%20%20jsonb_push_number(%26b,%20buf,%20buf_len,%20operation-%3E$1);%5C%5Cn%20%20%20%20%7D%5C%5Cn',true,false,true,false)
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxyver", strlen("proxyver"));
+      jsonb_push_number(&b, buf, buf_len, operation->proxyver);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "ftp_ssl_ccc_mode", strlen("ftp_ssl_ccc_mode"));
+      jsonb_push_number(&b, buf, buf_len, operation->ftp_ssl_ccc_mode);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "socks5_gssapi_nec", strlen("socks5_gssapi_nec"));
+      jsonb_push_number(&b, buf, buf_len, operation->socks5_gssapi_nec);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "ftp_filemethod", strlen("ftp_filemethod"));
+      jsonb_push_number(&b, buf, buf_len, operation->ftp_filemethod);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "default_node_flags", strlen("default_node_flags"));
+      jsonb_push_number(&b, buf, buf_len, operation->default_node_flags);
+    }
+
+    // https://gchq.github.io/CyberChef/#recipe=Regular_expression('User%20defined','(?%3C%3D%5E%20%20unsigned%20short%20)(%5Ba-z%5C%5Cd_%5D%2B)(?%3D;)',true,true,false,false,false,false,'List%20matches')Find_/_Replace(%7B'option':'Regex','string':'%5E(%5B%5E%5C%5Cn%5D%2B)'%7D,'%20%20%20%20%7B%5C%5Cn%20%20%20%20%20%20jsonb_push_key(%26b,%20buf,%20buf_len,%20%22$1%22,%20strlen(%22$1%22));%5C%5Cn%20%20%20%20%20%20jsonb_push_number(%26b,%20buf,%20buf_len,%20operation-%3E$1);%5C%5Cn%20%20%20%20%7D%5C%5Cn',true,false,true,false)
+    {
+      jsonb_push_key(&b, buf, buf_len, "porttouse", strlen("porttouse"));
+      jsonb_push_number(&b, buf, buf_len, operation->porttouse);
+    }
+
+    // struct getout *
+    // https://gchq.github.io/CyberChef/#recipe=Regular_expression('User%20defined','(?%3C%3D%5E%20%20struct%20getout%20%5C%5C*)(%5Ba-z%5C%5Cd_%5D%2B)(?%3D;)',true,true,false,false,false,false,'List%20matches')Find_/_Replace(%7B'option':'Regex','string':'%5E(%5B%5E%5C%5Cn%5D%2B)'%7D,'%20%20%20%20%7B%5C%5Cn%20%20%20%20%20%20jsonb_push_key(%26b,%20buf,%20buf_len,%20%22$1%22,%20strlen(%22$1%22));%5C%5Cn%20%20%20%20%20%20jsonb_push_array(%26b,%20buf,%20buf_len);%5C%5Cn%20%20%20%20%20%20struct%20getout%20*$1%20%3D%20operation-%3E$1;%5C%5Cn%20%20%20%20%20%20while($1)%5C%5Cn%20%20%20%20%20%20%7B%5C%5Cn%20%20%20%20%20%20%20%20jsonb_push_string(%26b,%20buf,%20buf_len,%20$1-%3Eurl,%20strlen($1-%3Eurl));%5C%5Cn%20%20%20%20%20%20%20%20$1%20%3D%20$1-%3Enext;%5C%5Cn%20%20%20%20%20%20%7D%5C%5Cn%20%20%20%20%20%20jsonb_pop_array(%26b,%20buf,%20buf_len);%5C%5Cn%20%20%20%20%7D%5C%5Cn',true,false,true,false)
+    {
+      jsonb_push_key(&b, buf, buf_len, "url_list", strlen("url_list"));
+      jsonb_push_array(&b, buf, buf_len);
+      struct getout *url_list = operation->url_list;
+      while(url_list)
+      {
+        jsonb_push_string(&b, buf, buf_len, url_list->url, strlen(url_list->url));
+        url_list = url_list->next;
+      }
+      jsonb_pop_array(&b, buf, buf_len);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "url_last", strlen("url_last"));
+      jsonb_push_array(&b, buf, buf_len);
+      struct getout *url_last = operation->url_last;
+      while(url_last)
+      {
+        jsonb_push_string(&b, buf, buf_len, url_last->url, strlen(url_last->url));
+        url_last = url_last->next;
+      }
+      jsonb_pop_array(&b, buf, buf_len);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "url_get", strlen("url_get"));
+      jsonb_push_array(&b, buf, buf_len);
+      struct getout *url_get = operation->url_get;
+      while(url_get)
+      {
+        jsonb_push_string(&b, buf, buf_len, url_get->url, strlen(url_get->url));
+        url_get = url_get->next;
+      }
+      jsonb_pop_array(&b, buf, buf_len);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "url_out", strlen("url_out"));
+      jsonb_push_array(&b, buf, buf_len);
+      struct getout *url_out = operation->url_out;
+      while(url_out)
+      {
+        jsonb_push_string(&b, buf, buf_len, url_out->url, strlen(url_out->url));
+        url_out = url_out->next;
+      }
+      jsonb_pop_array(&b, buf, buf_len);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "url_ul", strlen("url_ul"));
+      jsonb_push_array(&b, buf, buf_len);
+      struct getout *url_ul = operation->url_ul;
+      while(url_ul)
+      {
+        jsonb_push_string(&b, buf, buf_len, url_ul->url, strlen(url_ul->url));
+        url_ul = url_ul->next;
+      }
+      jsonb_pop_array(&b, buf, buf_len);
+    }
+
+    // struct curl_slist *
+    // https://gchq.github.io/CyberChef/#recipe=Regular_expression('User%20defined','(?%3C%3D%5E%20%20struct%20curl_slist%20%5C%5C*)(%5Ba-z%5C%5Cd_%5D%2B)(?%3D;)',true,true,false,false,false,false,'List%20matches')Find_/_Replace(%7B'option':'Regex','string':'%5E(%5B%5E%5C%5Cn%5D%2B)'%7D,'%20%20%20%20%7B%5C%5Cn%20%20%20%20%20%20jsonb_push_key(%26b,%20buf,%20buf_len,%20%22cookies%22,%20strlen(%22cookies%22));%5C%5Cn%20%20%20%20%20%20jsonb_push_array(%26b,%20buf,%20buf_len);%5C%5Cn%20%20%20%20%20%20struct%20curl_slist%20*cookies%20%3D%20operation-%3Ecookies;%5C%5Cn%20%20%20%20%20%20while(cookies)%5C%5Cn%20%20%20%20%20%20%7B%5C%5Cn%20%20%20%20%20%20%20%20jsonb_push_string(%26b,%20buf,%20buf_len,%20cookies-%3Edata,%20strlen(cookies-%3Edata));%5C%5Cn%20%20%20%20%20%20%20%20cookies%20%3D%20cookies-%3Enext;%5C%5Cn%20%20%20%20%20%20%7D%5C%5Cn%20%20%20%20%20%20jsonb_pop_array(%26b,%20buf,%20buf_len);%5C%5Cn%20%20%20%20%7D%5C%5Cn',true,false,true,false)
+    {
+      jsonb_push_key(&b, buf, buf_len, "cookies", strlen("cookies"));
+      jsonb_push_array(&b, buf, buf_len);
+      struct curl_slist *cookies = operation->cookies;
+      while(cookies)
+      {
+        jsonb_push_string(&b, buf, buf_len, cookies->data, strlen(cookies->data));
+        cookies = cookies->next;
+      }
+      jsonb_pop_array(&b, buf, buf_len);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "cookiefiles", strlen("cookiefiles"));
+      jsonb_push_array(&b, buf, buf_len);
+      struct curl_slist *cookiefiles = operation->cookiefiles;
+      while(cookiefiles)
+      {
+        jsonb_push_string(&b, buf, buf_len, cookiefiles->data, strlen(cookiefiles->data));
+        cookiefiles = cookiefiles->next;
+      }
+      jsonb_pop_array(&b, buf, buf_len);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "mail_rcpt", strlen("mail_rcpt"));
+      jsonb_push_array(&b, buf, buf_len);
+      struct curl_slist *mail_rcpt = operation->mail_rcpt;
+      while(mail_rcpt)
+      {
+        jsonb_push_string(&b, buf, buf_len, mail_rcpt->data, strlen(mail_rcpt->data));
+        mail_rcpt = mail_rcpt->next;
+      }
+      jsonb_pop_array(&b, buf, buf_len);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "quote", strlen("quote"));
+      jsonb_push_array(&b, buf, buf_len);
+      struct curl_slist *quote = operation->quote;
+      while(quote)
+      {
+        jsonb_push_string(&b, buf, buf_len, quote->data, strlen(quote->data));
+        quote = quote->next;
+      }
+      jsonb_pop_array(&b, buf, buf_len);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "postquote", strlen("postquote"));
+      jsonb_push_array(&b, buf, buf_len);
+      struct curl_slist *postquote = operation->postquote;
+      while(postquote)
+      {
+        jsonb_push_string(&b, buf, buf_len, postquote->data, strlen(postquote->data));
+        postquote = postquote->next;
+      }
+      jsonb_pop_array(&b, buf, buf_len);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "prequote", strlen("prequote"));
+      jsonb_push_array(&b, buf, buf_len);
+      struct curl_slist *prequote = operation->prequote;
+      while(prequote)
+      {
+        jsonb_push_string(&b, buf, buf_len, prequote->data, strlen(prequote->data));
+        prequote = prequote->next;
+      }
+      jsonb_pop_array(&b, buf, buf_len);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "headers", strlen("headers"));
+      jsonb_push_array(&b, buf, buf_len);
+      struct curl_slist *headers = operation->headers;
+      while(headers)
+      {
+        jsonb_push_string(&b, buf, buf_len, headers->data, strlen(headers->data));
+        headers = headers->next;
+      }
+      jsonb_pop_array(&b, buf, buf_len);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "proxyheaders", strlen("proxyheaders"));
+      jsonb_push_array(&b, buf, buf_len);
+      struct curl_slist *proxyheaders = operation->proxyheaders;
+      while(proxyheaders)
+      {
+        jsonb_push_string(&b, buf, buf_len, proxyheaders->data, strlen(proxyheaders->data));
+        proxyheaders = proxyheaders->next;
+      }
+      jsonb_pop_array(&b, buf, buf_len);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "telnet_options", strlen("telnet_options"));
+      jsonb_push_array(&b, buf, buf_len);
+      struct curl_slist *telnet_options = operation->telnet_options;
+      while(telnet_options)
+      {
+        jsonb_push_string(&b, buf, buf_len, telnet_options->data, strlen(telnet_options->data));
+        telnet_options = telnet_options->next;
+      }
+      jsonb_pop_array(&b, buf, buf_len);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "resolve", strlen("resolve"));
+      jsonb_push_array(&b, buf, buf_len);
+      struct curl_slist *resolve = operation->resolve;
+      while(resolve)
+      {
+        jsonb_push_string(&b, buf, buf_len, resolve->data, strlen(resolve->data));
+        resolve = resolve->next;
+      }
+      jsonb_pop_array(&b, buf, buf_len);
+    }
+
+    {
+      jsonb_push_key(&b, buf, buf_len, "connect_to", strlen("connect_to"));
+      jsonb_push_array(&b, buf, buf_len);
+      struct curl_slist *connect_to = operation->connect_to;
+      while(connect_to)
+      {
+        jsonb_push_string(&b, buf, buf_len, connect_to->data, strlen(connect_to->data));
+        connect_to = connect_to->next;
+      }
+      jsonb_pop_array(&b, buf, buf_len);
+    }
+
+    /*
+      struct tool_mime *mimeroot;
+      struct tool_mime *mimecurrent;
+      curl_mime *mimepost;
+    */
+
+    jsonb_pop_object(&b, buf, buf_len); // object 1
+    operation = operation->next;
+  };
+  jsonb_pop_array(&b, buf, buf_len); // array 0
+
+}
+
+/*
+ * This is the main global constructor for the app. Call this before
+ * _any_ libcurl usage. If this fails, *NO* libcurl functions may be
+ * used, or havoc may be the result.
+ */
+static CURLcode main_init2(struct GlobalConfig *config)
+{
+  CURLcode result = CURLE_OK;
+
+#if defined(__DJGPP__) || defined(__GO32__)
+  /* stop stat() wasting time */
+  _djstat_flags |= _STAT_INODE | _STAT_EXEC_MAGIC | _STAT_DIRSIZE;
+#endif
+
+  /* Initialise the global config */
+  config->showerror = -1;             /* Will show errors */
+  config->errors = stderr;            /* Default errors to stderr */
+  config->styled_output = TRUE;       /* enable detection */
+  config->parallel_max = PARALLEL_DEFAULT;
+
+  /* Allocate the initial operate config */
+  config->first = config->last = malloc(sizeof(struct OperationConfig));
+  if(config->first) {
+    /* Perform the libcurl initialization */
+    result = curl_global_init(CURL_GLOBAL_DEFAULT);
+    if(!result) {
+      /* Get information about libcurl */
+      result = get_libcurl_info();
+
+      if(!result) {
+        /* Initialise the config */
+        config_init(config->first);
+        config->first->global = config;
+      }
+      else {
+        errorf(config, "error retrieving curl library information\n");
+        free(config->first);
+      }
+    }
+    else {
+      errorf(config, "error initializing curl library\n");
+      free(config->first);
+    }
+  }
+  else {
+    errorf(config, "error initializing curl\n");
+    result = CURLE_FAILED_INIT;
+  }
+
+  return result;
+}
+
+static void free_globalconfig2(struct GlobalConfig *config)
+{
+  Curl_safefree(config->trace_dump);
+
+  if(config->errors_fopened && config->errors)
+    fclose(config->errors);
+  config->errors = NULL;
+
+  if(config->trace_fopened && config->trace_stream)
+    fclose(config->trace_stream);
+  config->trace_stream = NULL;
+
+  Curl_safefree(config->libcurl);
+}
+
+#ifdef __EMSCRIPTEN__
+#include <emscripten/emscripten.h>
+#endif
+int
+#ifdef __EMSCRIPTEN__
+EMSCRIPTEN_KEEPALIVE
+#endif
+parse_curl_command(int argc, char **argv) // , char *output, int output_len)
+{
+
+  CURLcode result = CURLE_OK;
+  struct GlobalConfig _global;
+  struct GlobalConfig *global = &_global;
+  memset(global, 0, sizeof(_global));
+
+  // char *buf = malloc(output_len);
+  // memset(buf, 0, output_len);
+
+  int buf_len = 10240;
+  char *buf = malloc(buf_len);
+  memset(buf, 0, buf_len);
+
+
+  /* Initialize the curl library - do not call any libcurl functions before
+     this point */
+  result = main_init2(global);
+  if(!result) {
+    /* Enable all features */
+    curlinfo->ares_num = 10;
+    curlinfo->features = 0xffffffff;
+    /* Start our curl operation */
+    result = operate(global, argc, argv);
+    if (result == CURLE_OK){
+      dump_operation(global->first, argc, argv, buf, buf_len);
+    } 
+    /* Perform the main cleanup */
+    free_globalconfig2(global);
+  }
+
+  printf("%s\n", buf);
+
+  // int buf_len = strlen(buf);
+  // memcpy(output, buf, buf_len);
+  // free(buf);
+
+  return result;
+}
+
