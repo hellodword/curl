@@ -2607,7 +2607,7 @@ CURLcode operate(struct GlobalConfig *global, int argc, argv_item_t argv[])
         result = CURLE_FAILED_INIT;
     }
     else {
-      return result;
+      return CURL_LAST;
 #ifndef CURL_DISABLE_LIBCURL_OPTION
       if(global->libcurl) {
         /* Initialise the libcurl source output */
@@ -3966,14 +3966,15 @@ parse_curl_command(int argc, char **argv) // , char *output, int output_len)
     curlinfo->features = 0xffffffff;
     /* Start our curl operation */
     result = operate(global, argc, argv);
-    if (result == CURLE_OK){
+    if (result == CURL_LAST){
+      result = CURLE_OK;
       dump_operation(global->first, argc, argv, buf, buf_len);
+      printf("%s\n", buf);
     } 
     /* Perform the main cleanup */
     free_globalconfig2(global);
   }
 
-  printf("%s\n", buf);
 
   // int buf_len = strlen(buf);
   // memcpy(output, buf, buf_len);
