@@ -3659,39 +3659,23 @@ void dump_operation(struct OperationConfig *operation, int argc, argv_item_t arg
     }
 
     // struct getout *
-    // https://gchq.github.io/CyberChef/#recipe=Regular_expression('User%20defined','(?%3C%3D%5E%20%20struct%20getout%20%5C%5C*)(%5Ba-z%5C%5Cd_%5D%2B)(?%3D;)',true,true,false,false,false,false,'List%20matches')Find_/_Replace(%7B'option':'Regex','string':'%5E(%5B%5E%5C%5Cn%5D%2B)'%7D,'%20%20%20%20%7B%5C%5Cn%20%20%20%20%20%20jsonb_push_key(%26b,%20buf,%20buf_len,%20%22$1%22,%20strlen(%22$1%22));%5C%5Cn%20%20%20%20%20%20jsonb_push_array(%26b,%20buf,%20buf_len);%5C%5Cn%20%20%20%20%20%20struct%20getout%20*$1%20%3D%20operation-%3E$1;%5C%5Cn%20%20%20%20%20%20while($1)%5C%5Cn%20%20%20%20%20%20%7B%5C%5Cn%20%20%20%20%20%20%20%20jsonb_push_string(%26b,%20buf,%20buf_len,%20$1-%3Eurl,%20strlen($1-%3Eurl));%5C%5Cn%20%20%20%20%20%20%20%20$1%20%3D%20$1-%3Enext;%5C%5Cn%20%20%20%20%20%20%7D%5C%5Cn%20%20%20%20%20%20jsonb_pop_array(%26b,%20buf,%20buf_len);%5C%5Cn%20%20%20%20%7D%5C%5Cn',true,false,true,false)
+    // https://gchq.github.io/CyberChef/#recipe=Regular_expression('User%20defined','(?%3C%3D%5E%20%20struct%20getout%20%5C%5C*)(%5Ba-z%5C%5Cd_%5D%2B)(?%3D;)',true,true,false,false,false,false,'List%20matches')Find_/_Replace(%7B'option':'Regex','string':'%5E(%5B%5E%5C%5Cn%5D%2B)'%7D,'%20%20%20%20%7B%5C%5Cn%20%20%20%20%20%20jsonb_push_key(%26b,%20buf,%20buf_len,%20%22$1%22,%20strlen(%22$1%22));%5C%5Cn%20%20%20%20%20%20jsonb_push_array(%26b,%20buf,%20buf_len);%5C%5Cn%20%20%20%20%20%20struct%20getout%20*$1%20%3D%20operation-%3E$1;%5C%5Cn%20%20%20%20%20%20while($1)%5C%5Cn%20%20%20%20%20%20%7B%5C%5Cn%20%20%20%20%20%20%20%20jsonb_push_object(%26b,%20buf,%20buf_len);%20%5C%5Cn%5C%5Cn%20%20%20%20%20%20%20%20jsonb_push_key(%26b,%20buf,%20buf_len,%20todo,%20strlen(todo));%5C%5Cn%20%20%20%20%20%20%20%20jsonb_push_string(%26b,%20buf,%20buf_len,%20$1-%3Etodo,%20strlen($1-%3Etodo));%5C%5Cn%5C%5Cn%20%20%20%20%20%20%20%20jsonb_push_key(%26b,%20buf,%20buf_len,%20%22flags%22,%20strlen(%22flags%22));%5C%5Cn%20%20%20%20%20%20%20%20jsonb_push_number(%26b,%20buf,%20buf_len,%20$1-%3Eflags);%5C%5Cn%5C%5Cn%20%20%20%20%20%20%20%20jsonb_pop_object(%26b,%20buf,%20buf_len);%5C%5Cn%20%20%20%20%20%20%20%20$1%20%3D%20$1-%3Enext;%5C%5Cn%20%20%20%20%20%20%7D%5C%5Cn%20%20%20%20%20%20jsonb_pop_array(%26b,%20buf,%20buf_len);%5C%5Cn%20%20%20%20%7D%5C%5Cn',true,false,true,false)
     {
       jsonb_push_key(&b, buf, buf_len, "url_list", strlen("url_list"));
       jsonb_push_array(&b, buf, buf_len);
       struct getout *url_list = operation->url_list;
       while(url_list)
       {
+        jsonb_push_object(&b, buf, buf_len); 
+
+        jsonb_push_key(&b, buf, buf_len, "url", strlen("url"));
         jsonb_push_string(&b, buf, buf_len, url_list->url, strlen(url_list->url));
+
+        jsonb_push_key(&b, buf, buf_len, "flags", strlen("flags"));
+        jsonb_push_number(&b, buf, buf_len, url_list->flags);
+
+        jsonb_pop_object(&b, buf, buf_len);
         url_list = url_list->next;
-      }
-      jsonb_pop_array(&b, buf, buf_len);
-    }
-
-    {
-      jsonb_push_key(&b, buf, buf_len, "url_last", strlen("url_last"));
-      jsonb_push_array(&b, buf, buf_len);
-      struct getout *url_last = operation->url_last;
-      while(url_last)
-      {
-        jsonb_push_string(&b, buf, buf_len, url_last->url, strlen(url_last->url));
-        url_last = url_last->next;
-      }
-      jsonb_pop_array(&b, buf, buf_len);
-    }
-
-    {
-      jsonb_push_key(&b, buf, buf_len, "url_get", strlen("url_get"));
-      jsonb_push_array(&b, buf, buf_len);
-      struct getout *url_get = operation->url_get;
-      while(url_get)
-      {
-        jsonb_push_string(&b, buf, buf_len, url_get->url, strlen(url_get->url));
-        url_get = url_get->next;
       }
       jsonb_pop_array(&b, buf, buf_len);
     }
@@ -3702,7 +3686,15 @@ void dump_operation(struct OperationConfig *operation, int argc, argv_item_t arg
       struct getout *url_out = operation->url_out;
       while(url_out)
       {
-        jsonb_push_string(&b, buf, buf_len, url_out->url, strlen(url_out->url));
+        jsonb_push_object(&b, buf, buf_len); 
+
+        jsonb_push_key(&b, buf, buf_len, "outfile", strlen("outfile"));
+        jsonb_push_string(&b, buf, buf_len, url_out->outfile, strlen(url_out->outfile));
+
+        jsonb_push_key(&b, buf, buf_len, "flags", strlen("flags"));
+        jsonb_push_number(&b, buf, buf_len, url_out->flags);
+
+        jsonb_pop_object(&b, buf, buf_len);
         url_out = url_out->next;
       }
       jsonb_pop_array(&b, buf, buf_len);
@@ -3714,7 +3706,15 @@ void dump_operation(struct OperationConfig *operation, int argc, argv_item_t arg
       struct getout *url_ul = operation->url_ul;
       while(url_ul)
       {
-        jsonb_push_string(&b, buf, buf_len, url_ul->url, strlen(url_ul->url));
+        jsonb_push_object(&b, buf, buf_len); 
+
+        jsonb_push_key(&b, buf, buf_len, "infile", strlen("infile"));
+        jsonb_push_string(&b, buf, buf_len, url_ul->infile, strlen(url_ul->infile));
+
+        jsonb_push_key(&b, buf, buf_len, "flags", strlen("flags"));
+        jsonb_push_number(&b, buf, buf_len, url_ul->flags);
+
+        jsonb_pop_object(&b, buf, buf_len);
         url_ul = url_ul->next;
       }
       jsonb_pop_array(&b, buf, buf_len);
